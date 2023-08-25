@@ -1,0 +1,15 @@
+@import "https://fonts.googleapis.com/css2?family=Martian+Mono:wght@600&display=swap";
+
+:focus {
+    outline: none;
+}
+
+:root {
+    font-family: "Martian Mono" monospace;
+}
+
+body {
+    width: 350px;
+    background-color: #363636;
+    overflow-x: hidden;
+}

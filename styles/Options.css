@@ -1,0 +1,35 @@
+* {
+    color: #FFFFFF;
+    font-family: "Martian Mono" monospace;
+    text-align: center;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 450px;
+    height: 100vh;
+    background-color: #363636;
+    overflow: hidden;
+}
+
+.mantine-rwipcq {
+    font-family: "Martian Mono" monospace;
+    text-align: center;
+    font-size: 25px;
+}
+
+.mantine-1v7s5f8:has(input:disabled) {
+    cursor: not-allowed;
+}
+
+.mantine-1un7m44:last-child {
+    background-color: red;
+}
+
+.mantine-1v7s5f8 {
+    margin-bottom: 20px;
+}
