@@ -1,5 +1,9 @@
 @import "https://fonts.googleapis.com/css2?family=Martian+Mono:wght@600&display=swap";
 
+* {
+    overflow-x: hidden;
+}
+
 :focus {
     outline: none;
 }
@@ -11,5 +15,4 @@
 body {
     width: 350px;
     background-color: #363636;
-    overflow-x: hidden;
 }

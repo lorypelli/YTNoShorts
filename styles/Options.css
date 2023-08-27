@@ -4,6 +4,10 @@
     text-align: center;
 }
 
+:focus {
+    outline: none;
+}
+
 body {
     display: flex;
     justify-content: center;
@@ -26,7 +30,19 @@ body {
     cursor: not-allowed;
 }
 
+.mantine-1un7m44 {
+    background-color: blue;
+}
+
+.mantine-1un7m44:hover {
+    background-color: blue;
+}
+
 .mantine-1un7m44:last-child {
+    background-color: red;
+}
+
+.mantine-1un7m44:last-child:hover {
     background-color: red;
 }
 
