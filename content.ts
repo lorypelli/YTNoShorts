@@ -13,6 +13,7 @@ if (url && url.startsWith('https://www.youtube.com/')) {
         Promise.resolve(checked).then(async c => {
             if (c == null) {
                 await storage.set('checked', '0');
+                c = '0';
             }
             if (await storage.get('shortcut') == null) {
                 await storage.set('shortcut', 'ALT + Q');
