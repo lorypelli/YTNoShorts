@@ -1,7 +1,7 @@
 {
   "name": "youtube-no-shorts",
   "displayName": "YTNoShorts",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Replace youtube shorts video version with normal one",
   "author": "LoryPelli",
   "scripts": {
@@ -30,7 +30,7 @@
   },
   "manifest": {
     "host_permissions": [
-      "https://www.youtube.com/"
+      "https://www.youtube.com/*"
     ],
     "browser_specific_settings": {
       "gecko": {
