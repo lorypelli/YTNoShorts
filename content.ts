@@ -1,6 +1,12 @@
+import type { PlasmoCSConfig } from 'plasmo';
 import { Storage } from '@plasmohq/storage';
 const storage = new Storage();
 const checked = storage.get('checked');
+export const config: PlasmoCSConfig = {
+    matches: [
+        'https://www.youtube.com/*'
+    ]
+};
 setInterval(() => {
     const url = window.location.href;
     if (url && url.startsWith('https://www.youtube.com/')) {
