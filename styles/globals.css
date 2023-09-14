@@ -2,14 +2,11 @@
 
 * {
     overflow-x: hidden;
+    font-family: "Martian Mono", monospace;
 }
 
 :focus {
     outline: none;
-}
-
-:root {
-    font-family: "Martian Mono", monospace;
 }
 
 body {
