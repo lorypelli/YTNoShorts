@@ -26,6 +26,14 @@ h1 {
     font-size: 25px;
 }
 
+.error {
+    border-color: red;
+}
+
+.error:focus {
+    border-color: red;
+}
+
 .mantine-rwipcq {
     font-family: "Martian Mono" monospace;
     text-align: center;

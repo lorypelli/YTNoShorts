@@ -41,10 +41,19 @@ export default function Header() {
             <h1>Shortcut</h1>
             <TextInput disabled={disabled} size='lg' placeholder='Shortcut...' id='shortcut' value={shortcutValue || 'ALT + Q'} onChange={(e) => e.preventDefault()} onKeyDown={(e) => {
                 e.preventDefault();
-                setShortcutValue('ALT' + ' + ' + e.key.toUpperCase());
+                if (e.key.toUpperCase() != ' ' && e.key.toUpperCase() != 'ALT') {
+                    document.getElementsByClassName('mantine-rwipcq')[0].classList.remove('error');
+                    setShortcutValue('ALT' + ' + ' + e.key.toUpperCase());
+                }
+                else {
+                    document.getElementsByClassName('mantine-rwipcq')[0].classList.add('error');
+                    setTimeout(() => {
+                        document.getElementsByClassName('mantine-rwipcq')[0].classList.remove('error');
+                    }, 500);
+                }
             }} />
             <Button onClick={async () => {
-                await storage.set('shortcut', document.getElementById('shortcut').value);
+                await storage.set('shortcut', shortcutValue);
                 await storage.set('checked', checked);
                 document.getElementsByTagName('button')[0].style.backgroundColor = 'green';
                 setTimeout(() => {
