@@ -1,14 +1,14 @@
 {
   "name": "youtube-no-shorts",
   "displayName": "YTNoShorts",
-  "version": "2.1.6",
+  "version": "2.1.7",
   "description": "Replace youtube shorts video version with normal one",
   "author": "LoryPelli",
   "scripts": {
     "build-firefox": "web-ext build --source-dir ./build/firefox-mv2-prod"
   },
   "dependencies": {
-    "@mantine/core": "^6.0.19",
+    "@mantine/core": "^6.0.20",
     "@plasmohq/storage": "^1.8.0",
     "@tabler/icons-react": "^2.34.0",
     "plasmo": "0.82.1",
