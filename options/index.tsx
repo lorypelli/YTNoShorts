@@ -14,6 +14,7 @@ export default function Header() {
         Promise.resolve(checked).then(async c => {
             if (c == null) {
                 await storage.set('checked', '0');
+                c = '0';
             }
             if (c == '1') {
                 setDisabled(true);
@@ -23,6 +24,7 @@ export default function Header() {
         Promise.resolve(shortcut).then(async s => {
             if (s == null) {
                 await storage.set('shortcut', 'ALT + Q');
+                s = 'ALT + Q';
             }
             setShortcutValue(s);
         });
