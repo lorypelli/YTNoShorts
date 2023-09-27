@@ -12,11 +12,10 @@
 
 body {
     display: flex;
-    justify-content: center;
     align-items: center;
     margin-left: auto;
     margin-right: auto;
-    width: 450px;
+    width: 275px;
     height: 100vh;
     background-color: #363636;
     overflow: hidden;
@@ -35,7 +34,7 @@ h1 {
 }
 
 .mantine-rwipcq {
-    font-family: "Martian Mono" monospace;
+    font-family: "Martian Mono", monospace;
     text-align: center;
     font-size: 25px;
 }

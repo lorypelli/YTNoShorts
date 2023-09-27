@@ -1,16 +1,16 @@
 {
   "name": "youtube-no-shorts",
   "displayName": "YTNoShorts",
-  "version": "2.1.8",
+  "version": "2.1.9",
   "description": "Replace youtube shorts video version with normal one",
   "author": "LoryPelli",
   "scripts": {
     "build-firefox": "web-ext build --source-dir ./build/firefox-mv2-prod"
   },
   "dependencies": {
-    "@mantine/core": "^6.0.20",
+    "@mantine/core": "^6.0.21",
     "@plasmohq/storage": "^1.8.0",
-    "@tabler/icons-react": "^2.34.0",
+    "@tabler/icons-react": "^2.35.0",
     "plasmo": "0.82.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"
@@ -21,9 +21,9 @@
     "@types/node": "20.5.0",
     "@types/react": "18.2.20",
     "@types/react-dom": "18.2.7",
-    "@typescript-eslint/eslint-plugin": "^6.7.0",
-    "@typescript-eslint/parser": "^6.7.0",
-    "eslint": "^8.49.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.3",
+    "@typescript-eslint/parser": "^6.7.3",
+    "eslint": "^8.50.0",
     "eslint-plugin-react": "^7.33.2",
     "typescript": "5.1.6"
   },
