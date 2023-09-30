@@ -1,7 +1,7 @@
 @import "https://fonts.googleapis.com/css2?family=Martian+Mono:wght@600&display=swap";
 
 * {
-    color: #FFFFFF;
+    color: white;
     font-family: "Martian Mono", monospace;
     text-align: center;
 }

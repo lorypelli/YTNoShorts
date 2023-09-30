@@ -2,8 +2,8 @@
 
 * {
     overflow-x: hidden;
-    font-family: "Martian Mono", monospace;
-    color: white;
+    font-family: "Martian Mono", monospace !important;
+    color: white !important;
 }
 
 :focus {
