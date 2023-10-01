@@ -6,7 +6,7 @@ export default function Footer() {
         <>
             <h1>Extension made by <br />RVG|𝓵𝓸𝓻𝔂</h1>
             <a href='https://github.com/lorypelli' target='_blank'>
-                <IconBrandGithub color='#FFFFFF' />
+                <IconBrandGithub width={25} height={25} color='#FFFFFF' className='icon' />
             </a>
         </>
     );
