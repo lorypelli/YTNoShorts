@@ -11,7 +11,7 @@
     "@mantine/core": "^6.0.21",
     "@plasmohq/storage": "^1.8.0",
     "@tabler/icons-react": "^2.38.0",
-    "plasmo": "^0.82.6",
+    "plasmo": "^0.83.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
