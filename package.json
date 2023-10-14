@@ -1,7 +1,7 @@
 {
   "name": "youtube-no-shorts",
   "displayName": "YTNoShorts",
-  "version": "2.1.17",
+  "version": "2.2.0",
   "description": "Replace youtube shorts video version with normal one",
   "author": "LoryPelli",
   "scripts": {
@@ -10,7 +10,7 @@
   "dependencies": {
     "@mantine/core": "^6.0.21",
     "@plasmohq/storage": "^1.8.0",
-    "@tabler/icons-react": "^2.38.0",
+    "@tabler/icons-react": "^2.39.0",
     "plasmo": "^0.83.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
@@ -21,9 +21,9 @@
     "@types/node": "20.5.0",
     "@types/react": "18.2.20",
     "@types/react-dom": "18.2.7",
-    "@typescript-eslint/eslint-plugin": "^6.7.4",
-    "@typescript-eslint/parser": "^6.7.4",
-    "eslint": "^8.50.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "@typescript-eslint/parser": "^6.7.5",
+    "eslint": "^8.51.0",
     "eslint-plugin-react": "^7.33.2",
     "typescript": "5.1.6"
   },

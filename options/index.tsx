@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Switch, TextInput, Button, MantineProvider } from '@mantine/core';
 import { Storage } from '@plasmohq/storage';
 import '../styles/Options.css';
+import { checkLatest } from '~checkLatest';
 export default function Header() {
     const storage = new Storage();
     const [checked, setChecked] = useState('0');
@@ -54,27 +55,46 @@ export default function Header() {
                     }, 500);
                 }
             }} />
-            <Button onClick={async () => {
-                await storage.set('shortcut', shortcutValue);
-                await storage.set('checked', checked);
-                document.getElementsByTagName('button')[0].style.backgroundColor = 'green';
-                setTimeout(() => {
-                    document.getElementsByTagName('button')[0].style.backgroundColor = 'blue';
-                }, 500);
-            }}>Save</Button>
-            <br />
-            <br />
-            <Button onClick={async () => {
-                setChecked('0');
-                setShortcutValue('ALT + Q');
-                await storage.set('checked', '0');
-                await storage.set('shortcut', 'ALT + Q');
-                setDisabled(false);
-                document.getElementsByTagName('button')[1].style.backgroundColor = 'green';
-                setTimeout(() => {
-                    document.getElementsByTagName('button')[1].style.backgroundColor = 'red';
-                }, 500);
-            }}>Reset</Button>
+            <div id="buttons">
+                <Button onClick={async () => {
+                    await storage.set('shortcut', shortcutValue);
+                    await storage.set('checked', checked);
+                    document.getElementsByTagName('button')[0].style.backgroundColor = 'green';
+                    setTimeout(() => {
+                        document.getElementsByTagName('button')[0].style.backgroundColor = 'blue';
+                    }, 500);
+                }}>Save</Button>
+                <br />
+                <br />
+                <Button onClick={async () => {
+                    setChecked('0');
+                    setShortcutValue('ALT + Q');
+                    await storage.set('checked', '0');
+                    await storage.set('shortcut', 'ALT + Q');
+                    setDisabled(false);
+                    document.getElementsByTagName('button')[1].style.backgroundColor = 'green';
+                    setTimeout(() => {
+                        document.getElementsByTagName('button')[1].style.backgroundColor = 'red';
+                    }, 500);
+                }}>Reset</Button>
+                <br />
+                <br />
+                <Button onClick={async () => {
+                    const isLatest = await checkLatest();
+                    document.getElementsByTagName('h1')[1].style.display = 'block';
+                    if (isLatest) {
+                        document.getElementsByTagName('h1')[1].innerHTML = 'You are using the latest version';
+                    }
+                    else {
+                        document.getElementsByTagName('h1')[1].innerHTML = 'You are not using the latest version, update it from <a href="https://addons.mozilla.org/firefox/addon/ytnoshorts" target="_blank">firefox addons store</a>';
+                    }
+                    document.getElementsByTagName('button')[2].style.backgroundColor = 'green';
+                    setTimeout(() => {
+                        document.getElementsByTagName('button')[2].style.backgroundColor = 'blueviolet';
+                    }, 500);
+                }}>Check for updates</Button>
+                <h1>...</h1>
+            </div>
         </MantineProvider>
     );
 }

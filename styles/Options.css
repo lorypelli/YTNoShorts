@@ -1,7 +1,7 @@
 @import "https://fonts.googleapis.com/css2?family=Martian+Mono:wght@600&display=swap";
 
 * {
-    color: white;
+    color: white !important;
     font-family: "Martian Mono", monospace !important;
     text-align: center !important;
 }
@@ -20,8 +20,12 @@ body {
     overflow: hidden;
 }
 
-h1 {
+h1:first-child, h1:last-child {
     font-size: 25px;
+}
+
+h1:last-child {
+    display: none;
 }
 
 .error {
@@ -40,20 +44,28 @@ h1 {
     cursor: not-allowed;
 }
 
-.mantine-1un7m44 {
+#buttons > :nth-child(1) {
     background-color: blue;
 }
 
-.mantine-1un7m44:hover {
+#buttons > :nth-child(1):hover {
     background-color: blue;
 }
 
-.mantine-1un7m44:last-child {
+#buttons > :nth-child(4) {
     background-color: red;
 }
 
-.mantine-1un7m44:last-child:hover {
+#buttons > :nth-child(4):hover {
     background-color: red;
+}
+
+#buttons > :nth-child(7) {
+    background-color: blueviolet;
+}
+
+#buttons > :nth-child(7):hover {
+    background-color: blueviolet;
 }
 
 .mantine-1v7s5f8 {
