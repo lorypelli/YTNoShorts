@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Switch, TextInput, Button, MantineProvider } from '@mantine/core';
 import { Storage } from '@plasmohq/storage';
 import '../styles/Options.css';
-import { checkLatest } from '~checkLatest';
+import versionStatus from '~versionStatus';
 export default function Header() {
     const storage = new Storage();
     const [checked, setChecked] = useState('0');
@@ -80,13 +80,16 @@ export default function Header() {
                 <br />
                 <br />
                 <Button onClick={async () => {
-                    const isLatest = await checkLatest();
+                    const status = await versionStatus();
                     document.getElementsByTagName('h1')[1].style.display = 'block';
-                    if (isLatest) {
+                    if (status == 'Stable') {
                         document.getElementsByTagName('h1')[1].innerHTML = 'You are using the latest version';
                     }
-                    else {
-                        document.getElementsByTagName('h1')[1].innerHTML = 'You are not using the latest version, update it from <a href="https://addons.mozilla.org/firefox/addon/ytnoshorts" target="_blank">firefox addons store</a>';
+                    else if (status == 'Outdated') {
+                        document.getElementsByTagName('h1')[1].innerHTML = 'You are using an outdated version';
+                    }
+                    else if (status == 'Beta') {
+                        document.getElementsByTagName('h1')[1].innerHTML = 'You are using a beta version';
                     }
                     document.getElementsByTagName('button')[2].style.backgroundColor = 'green';
                     setTimeout(() => {
