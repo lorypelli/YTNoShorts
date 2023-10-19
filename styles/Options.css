@@ -20,11 +20,40 @@ body {
     overflow: hidden;
 }
 
-h1:first-child, h1:last-child {
-    font-size: 25px;
+#disable {
+    height: 60px;
+    font-size: 50px;
+    background-color: orange;
 }
 
-h1:last-child {
+.disabled :not(#enable) :not(.mantine-Button-inner) :not(.mantine-Button-label) {
+    filter: blur(5);
+}
+
+.disabled {
+    pointer-events: none;
+}
+
+#enable {
+    height: 60px;
+    font-size: 50px;
+    background-color: orange;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    pointer-events: all;
+    box-shadow: 5px 5px 5px #000000;
+    display: none;
+}
+
+#__plasmo {
+    position: relative;
+}
+
+#status {
+    font-size: 25px;
     display: none;
 }
 
@@ -48,23 +77,11 @@ h1:last-child {
     background-color: blue;
 }
 
-#buttons > :nth-child(1):hover {
-    background-color: blue;
-}
-
 #buttons > :nth-child(4) {
     background-color: red;
 }
 
-#buttons > :nth-child(4):hover {
-    background-color: red;
-}
-
 #buttons > :nth-child(7) {
-    background-color: blueviolet;
-}
-
-#buttons > :nth-child(7):hover {
     background-color: blueviolet;
 }
 

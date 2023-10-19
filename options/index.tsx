@@ -32,8 +32,22 @@ export default function Header() {
     }, []);
     return (
         <MantineProvider theme={{ colorScheme: 'dark' }}>
+            <Button id='enable' onClick={() => {
+                document.getElementById('__plasmo').classList.remove('disabled');
+                document.getElementById('enable').style.display = 'none';
+                document.getElementById('disable').style.display = 'block';
+            }}>ENABLE</Button>
+            <br />
+            <br />
+            <Button id='disable' onClick={() => {
+                document.getElementById('__plasmo').classList.add('disabled');
+                document.getElementById('enable').style.display = 'flex';
+                document.getElementById('disable').style.display = 'none';
+            }}>DISABLE</Button>
+            <br />
+            <br />
             <Switch checked={checked == '1' ? true : false} label="Always replace youtube shorts layout with normal one" onClick={(e) => {
-                if (e.currentTarget.checked == true) {
+                if (e.currentTarget.checked) {
                     setDisabled(true);
                 }
                 else {
@@ -41,7 +55,7 @@ export default function Header() {
                 }
                 setChecked(e.currentTarget.checked == true ? '1' : '0');
             }} />
-            <h1>Shortcut</h1>
+            <br />
             <TextInput disabled={disabled} size='lg' placeholder='Shortcut...' id='shortcut' value={shortcutValue || 'ALT + Q'} onChange={(e) => e.preventDefault()} onKeyDown={(e) => {
                 e.preventDefault();
                 if (e.key.toUpperCase() != ' ' && e.key.toUpperCase() != 'ALT') {
@@ -59,9 +73,9 @@ export default function Header() {
                 <Button onClick={async () => {
                     await storage.set('shortcut', shortcutValue);
                     await storage.set('checked', checked);
-                    document.getElementsByTagName('button')[0].style.backgroundColor = 'green';
+                    document.getElementsByTagName('button')[2].style.backgroundColor = 'green';
                     setTimeout(() => {
-                        document.getElementsByTagName('button')[0].style.backgroundColor = 'blue';
+                        document.getElementsByTagName('button')[2].style.backgroundColor = 'blue';
                     }, 500);
                 }}>Save</Button>
                 <br />
@@ -72,31 +86,31 @@ export default function Header() {
                     await storage.set('checked', '0');
                     await storage.set('shortcut', 'ALT + Q');
                     setDisabled(false);
-                    document.getElementsByTagName('button')[1].style.backgroundColor = 'green';
+                    document.getElementsByTagName('button')[3].style.backgroundColor = 'green';
                     setTimeout(() => {
-                        document.getElementsByTagName('button')[1].style.backgroundColor = 'red';
+                        document.getElementsByTagName('button')[3].style.backgroundColor = 'red';
                     }, 500);
                 }}>Reset</Button>
                 <br />
                 <br />
                 <Button onClick={async () => {
                     const status = await versionStatus();
-                    document.getElementsByTagName('h1')[1].style.display = 'block';
+                    document.getElementById('status').style.display = 'block';
                     if (status == 'Stable') {
-                        document.getElementsByTagName('h1')[1].innerHTML = 'You are using the latest version';
+                        document.getElementById('status').innerHTML = 'You are using the latest version';
                     }
                     else if (status == 'Outdated') {
-                        document.getElementsByTagName('h1')[1].innerHTML = 'You are using an outdated version';
+                        document.getElementById('status').innerHTML = 'You are using an outdated version';
                     }
                     else if (status == 'Beta') {
-                        document.getElementsByTagName('h1')[1].innerHTML = 'You are using a beta version';
+                        document.getElementById('status').innerHTML = 'You are using a beta version';
                     }
-                    document.getElementsByTagName('button')[2].style.backgroundColor = 'green';
+                    document.getElementsByTagName('button')[4].style.backgroundColor = 'green';
                     setTimeout(() => {
-                        document.getElementsByTagName('button')[2].style.backgroundColor = 'blueviolet';
+                        document.getElementsByTagName('button')[4].style.backgroundColor = 'blueviolet';
                     }, 500);
                 }}>Check for updates</Button>
-                <h1>...</h1>
+                <h1 id='status'>...</h1>
             </div>
         </MantineProvider>
     );
