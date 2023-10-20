@@ -10,7 +10,7 @@ export default function Header() {
     const [shortcutValue, setShortcutValue] = useState('');
     const [disabled, setDisabled] = useState(false);
     const [extDisabled, setExtDisabled] = useState('0');
-    const [saved, setSaved] = useState(true);
+    const [saved, setSaved] = useState(false);
     useEffect(() => {
         const checked = storage.get('checked');
         const shortcut = storage.get('shortcut');
@@ -69,6 +69,9 @@ export default function Header() {
                 document.getElementById('disable').style.display = 'block';
                 await storage.set('extension', '0');
                 setExtDisabled('0');
+                if (await storage.get('shortcut') == shortcutValue && await storage.get('checked') == checkedValue) {
+                    setSaved(true);
+                }
             }}>ENABLE</Button>
             <br />
             <br />
