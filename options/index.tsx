@@ -6,10 +6,11 @@ import '../styles/Options.css';
 import versionStatus from '~versionStatus';
 export default function Header() {
     const storage = new Storage();
-    const [checked, setChecked] = useState('0');
+    const [checkedValue, setCheckedValue] = useState('0');
     const [shortcutValue, setShortcutValue] = useState('');
     const [disabled, setDisabled] = useState(false);
-    const [, setExtDisabled] = useState('0');
+    const [extDisabled, setExtDisabled] = useState('0');
+    const [saved, setSaved] = useState(true);
     useEffect(() => {
         const checked = storage.get('checked');
         const shortcut = storage.get('shortcut');
@@ -22,7 +23,7 @@ export default function Header() {
             if (c == '1') {
                 setDisabled(true);
             }
-            setChecked(c);
+            setCheckedValue(c);
         });
         Promise.resolve(shortcut).then(async s => {
             if (s == null) {
@@ -49,6 +50,17 @@ export default function Header() {
             setExtDisabled(e);
         });
     }, []);
+    useEffect(() => {
+        function beforeUnloadHandler(e: BeforeUnloadEvent) {
+            if (!saved && !(extDisabled == '1' ? true : false)) {
+                e.preventDefault();
+            }
+        }
+        window.addEventListener('beforeunload', beforeUnloadHandler);
+        return () => {
+            window.removeEventListener('beforeunload', beforeUnloadHandler);
+        };
+    }, [saved, extDisabled]);
     return (
         <MantineProvider theme={{ colorScheme: 'dark' }}>
             <Button id='enable' onClick={async () => {
@@ -70,18 +82,21 @@ export default function Header() {
             }}>DISABLE</Button>
             <br />
             <br />
-            <Switch checked={checked == '1' ? true : false} label="Always replace youtube shorts layout with normal one" onClick={(e) => {
+            <Switch checked={checkedValue == '1' ? true : false} label="Always replace youtube shorts layout with normal one" onClick={(e) => {
                 if (e.currentTarget.checked) {
                     setDisabled(true);
                 }
                 else {
                     setDisabled(false);
                 }
-                setChecked(e.currentTarget.checked == true ? '1' : '0');
+                setCheckedValue(e.currentTarget.checked == true ? '1' : '0');
             }} />
             <br />
             <TextInput disabled={disabled} size='lg' placeholder='Shortcut...' id='shortcut' value={shortcutValue || 'ALT + Q'} onChange={(e) => e.preventDefault()} onKeyDown={(e) => {
                 e.preventDefault();
+                if (e.currentTarget.value != shortcutValue) {
+                    setSaved(false);
+                }
                 if (e.key.toUpperCase() != ' ' && e.key.toUpperCase() != 'ALT') {
                     document.getElementsByClassName('mantine-rwipcq')[0].classList.remove('error');
                     setShortcutValue('ALT' + ' + ' + e.key.toUpperCase());
@@ -95,8 +110,9 @@ export default function Header() {
             }} />
             <div id="buttons">
                 <Button onClick={async () => {
+                    setSaved(true);
                     await storage.set('shortcut', shortcutValue);
-                    await storage.set('checked', checked);
+                    await storage.set('checked', checkedValue);
                     document.getElementsByTagName('button')[2].style.backgroundColor = 'green';
                     setTimeout(() => {
                         document.getElementsByTagName('button')[2].style.backgroundColor = 'blue';
@@ -105,7 +121,8 @@ export default function Header() {
                 <br />
                 <br />
                 <Button onClick={async () => {
-                    setChecked('0');
+                    setSaved(true);
+                    setCheckedValue('0');
                     setShortcutValue('ALT + Q');
                     await storage.set('checked', '0');
                     await storage.set('shortcut', 'ALT + Q');
