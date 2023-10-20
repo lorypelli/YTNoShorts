@@ -9,9 +9,11 @@ export default function Header() {
     const [checked, setChecked] = useState('0');
     const [shortcutValue, setShortcutValue] = useState('');
     const [disabled, setDisabled] = useState(false);
+    const [, setExtDisabled] = useState('0');
     useEffect(() => {
         const checked = storage.get('checked');
         const shortcut = storage.get('shortcut');
+        const extension = storage.get('extension');
         Promise.resolve(checked).then(async c => {
             if (c == null) {
                 await storage.set('checked', '0');
@@ -29,20 +31,41 @@ export default function Header() {
             }
             setShortcutValue(s);
         });
-    }, []);
-    return (
-        <MantineProvider theme={{ colorScheme: 'dark' }}>
-            <Button id='enable' onClick={() => {
+        Promise.resolve(extension).then(async e => {
+            if (e == null) {
+                await storage.set('extension', '0');
+                e = '0';
+            }
+            if (e == '1') {
+                document.getElementById('__plasmo').classList.add('disabled');
+                document.getElementById('enable').style.display = 'block';
+                document.getElementById('disable').style.display = 'none';
+            }
+            else {
                 document.getElementById('__plasmo').classList.remove('disabled');
                 document.getElementById('enable').style.display = 'none';
                 document.getElementById('disable').style.display = 'block';
+            }
+            setExtDisabled(e);
+        });
+    }, []);
+    return (
+        <MantineProvider theme={{ colorScheme: 'dark' }}>
+            <Button id='enable' onClick={async () => {
+                document.getElementById('__plasmo').classList.remove('disabled');
+                document.getElementById('enable').style.display = 'none';
+                document.getElementById('disable').style.display = 'block';
+                await storage.set('extension', '0');
+                setExtDisabled('0');
             }}>ENABLE</Button>
             <br />
             <br />
-            <Button id='disable' onClick={() => {
+            <Button id='disable' onClick={async () => {
                 document.getElementById('__plasmo').classList.add('disabled');
-                document.getElementById('enable').style.display = 'flex';
+                document.getElementById('enable').style.display = 'block';
                 document.getElementById('disable').style.display = 'none';
+                await storage.set('extension', '1');
+                setExtDisabled('1');
             }}>DISABLE</Button>
             <br />
             <br />
