@@ -64,6 +64,7 @@ export default function Header() {
                 document.getElementById('__plasmo').classList.add('disabled');
                 document.getElementById('enable').style.display = 'block';
                 document.getElementById('disable').style.display = 'none';
+                document.getElementById('status').style.display = 'none';
                 await storage.set('extension', '1');
                 setExtDisabled('1');
             }}>DISABLE</Button>
