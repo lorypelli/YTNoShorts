@@ -100,9 +100,6 @@ export default function Header() {
                 if (e.currentTarget.value != shortcutValue) {
                     setSaved(false);
                 }
-                else {
-                    setSaved(true);
-                }
                 if (e.key.toUpperCase() != ' ' && e.key.toUpperCase() != 'ALT') {
                     document.getElementsByClassName('mantine-rwipcq')[0].classList.remove('error');
                     setShortcutValue('ALT' + ' + ' + e.key.toUpperCase());
