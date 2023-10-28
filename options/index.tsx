@@ -54,6 +54,7 @@ export default function Header() {
         function beforeUnloadHandler(e: BeforeUnloadEvent) {
             if (!saved && !(extDisabled == '1' ? true : false)) {
                 e.preventDefault();
+                e.returnValue = '';
             }
         }
         window.addEventListener('beforeunload', beforeUnloadHandler);
