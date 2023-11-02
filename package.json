@@ -1,7 +1,7 @@
 {
   "name": "youtube-no-shorts",
   "displayName": "YTNoShorts",
-  "version": "2.3.8",
+  "version": "2.3.9",
   "description": "Replace youtube shorts video version with normal one",
   "author": "LoryPelli",
   "scripts": {

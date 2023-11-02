@@ -14,7 +14,6 @@ export default function Header() {
     useEffect(() => {
         const checked = storage.get('checked');
         const shortcut = storage.get('shortcut');
-        const extension = storage.get('extension');
         Promise.resolve(checked).then(async c => {
             if (c == null) {
                 await storage.set('checked', '0');
@@ -32,22 +31,25 @@ export default function Header() {
             }
             setShortcutValue(s);
         });
-        Promise.resolve(extension).then(async e => {
-            if (e == null) {
-                await storage.set('extension', '0');
-                e = '0';
-            }
-            if (e == '1') {
-                document.getElementById('__plasmo').classList.add('disabled');
-                document.getElementById('enable').style.display = 'block';
-                document.getElementById('disable').style.display = 'none';
-            }
-            else {
-                document.getElementById('__plasmo').classList.remove('disabled');
-                document.getElementById('enable').style.display = 'none';
-                document.getElementById('disable').style.display = 'block';
-            }
-            setExtDisabled(e);
+        setInterval(() => {
+            const extension = storage.get('extension');
+            Promise.resolve(extension).then(async e => {
+                if (e == null) {
+                    await storage.set('extension', '0');
+                    e = '0';
+                }
+                if (e == '1') {
+                    document.getElementById('__plasmo').classList.add('disabled');
+                    document.getElementById('enable').style.display = 'block';
+                    document.getElementById('disable').style.display = 'none';
+                }
+                else {
+                    document.getElementById('__plasmo').classList.remove('disabled');
+                    document.getElementById('enable').style.display = 'none';
+                    document.getElementById('disable').style.display = 'block';
+                }
+                setExtDisabled(e);
+            });
         });
     }, []);
     useEffect(() => {
