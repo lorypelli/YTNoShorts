@@ -10,7 +10,7 @@ export default function Header() {
     const [shortcutValue, setShortcutValue] = useState('');
     const [disabled, setDisabled] = useState(false);
     const [extDisabled, setExtDisabled] = useState('0');
-    const [saved, setSaved] = useState(false);
+    const [saved, setSaved] = useState(true);
     useEffect(() => {
         const checked = storage.get('checked');
         const shortcut = storage.get('shortcut');
@@ -87,20 +87,35 @@ export default function Header() {
             <br />
             <br />
             <Switch checked={checkedValue == '1' ? true : false} label="Always replace youtube shorts layout with normal one" onClick={(e) => {
-                if (e.currentTarget.checked) {
+                const checked = storage.get('checked');
+                Promise.resolve(checked).then(c => {
+                    if (e.target.checked == true ? '1' : '0' != c) {
+                        setSaved(false);
+                    }
+                    else {
+                        setSaved(true);
+                    }
+                });
+                if (e.target.checked) {
                     setDisabled(true);
                 }
                 else {
                     setDisabled(false);
                 }
-                setCheckedValue(e.currentTarget.checked == true ? '1' : '0');
+                setCheckedValue(e.target.checked == true ? '1' : '0');
             }} />
             <br />
-            <TextInput disabled={disabled} size='lg' placeholder='Shortcut...' id='shortcut' value={shortcutValue || 'ALT + Q'} onChange={(e) => e.preventDefault()} onKeyDown={(e) => {
+            <TextInput disabled={disabled} size='lg' placeholder='Shortcut...' id='shortcut' value={shortcutValue || 'ALT + Q'} onChange={(e) => e.preventDefault()} onKeyDown={async (e) => {
                 e.preventDefault();
-                if (e.currentTarget.value != shortcutValue) {
-                    setSaved(false);
-                }
+                const shortcut = storage.get('shortcut');
+                Promise.resolve(shortcut).then(s => {
+                    if (e.target.value != s) {
+                        setSaved(false);
+                    }
+                    else {
+                        setSaved(true);
+                    }
+                });
                 if (e.key.toUpperCase() != ' ' && e.key.toUpperCase() != 'ALT') {
                     document.getElementsByClassName('mantine-rwipcq')[0].classList.remove('error');
                     setShortcutValue('ALT' + ' + ' + e.key.toUpperCase());
