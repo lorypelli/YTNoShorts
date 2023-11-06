@@ -107,7 +107,7 @@ export default function Header() {
                 setCheckedValue(e.target.checked == true ? '1' : '0');
             }} />
             <br />
-            <TextInput disabled={disabled} size='lg' placeholder='Shortcut...' id='shortcut' value={shortcutValue || 'ALT + Q'} onChange={(e) => e.preventDefault()} onKeyDown={async (e) => {
+            <TextInput disabled={disabled} size='lg' placeholder='Shortcut...' id='shortcut' value={shortcutValue || 'ALT + Q'} onChange={(e) => e.preventDefault()} onKeyDown={(e) => {
                 e.preventDefault();
                 const shortcut = storage.get('shortcut');
                 Promise.resolve(shortcut).then(s => {
