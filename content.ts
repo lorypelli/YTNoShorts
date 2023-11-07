@@ -90,7 +90,8 @@ setInterval(async () => {
                     };
                 }
                 window.addEventListener('keydown', async (e) => {
-                    if (e.altKey && e.key.toUpperCase() == (await storage.get('shortcut')).split('+')[1].trim()) {
+                    console.log(e.altKey && (await storage.get('shortcut')).split('+')[0].trim() == 'ALT');
+                    if ((e.altKey && (await storage.get('shortcut')).split('+')[0].trim() == 'ALT' || e.ctrlKey && (await storage.get('shortcut')).split('+')[0].trim() == 'CONTROL' || e.shiftKey && (await storage.get('shortcut')).split('+')[0].trim() == 'SHIFT') && e.key.toUpperCase() == (await storage.get('shortcut')).split('+')[1].trim()) {
                         window.location.href = `https://www.youtube.com/watch?v=${url.split('/')[4]}`;
                     }
                 });

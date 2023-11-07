@@ -4,10 +4,10 @@ import { Switch, TextInput, Button, MantineProvider, Select } from '@mantine/cor
 import { Storage } from '@plasmohq/storage';
 import '../styles/Options.css';
 import versionStatus from '~versionStatus';
-export default function Header() {
+export default function Options() {
     const storage = new Storage();
     const [checkedValue, setCheckedValue] = useState('0');
-    const [mainKey, setMainKey] = useState('');
+    const [primaryKey, setPrimaryKey] = useState('');
     const [secondaryKey, setSecondaryKey] = useState('');
     const [disabled, setDisabled] = useState(false);
     const [extDisabled, setExtDisabled] = useState('0');
@@ -30,7 +30,7 @@ export default function Header() {
                 await storage.set('shortcut', 'ALT + Q');
                 s = 'ALT + Q';
             }
-            setMainKey(s.split('+')[0].trim());
+            setPrimaryKey(s.split('+')[0].trim());
             setSecondaryKey(s.split('+')[1].trim());
         });
         setInterval(() => {
@@ -74,7 +74,7 @@ export default function Header() {
                 document.getElementById('disable').style.display = 'block';
                 await storage.set('extension', '0');
                 setExtDisabled('0');
-                if (await storage.get('shortcut') == mainKey + ' + ' + secondaryKey && await storage.get('checked') == checkedValue) {
+                if (await storage.get('shortcut') == primaryKey + ' + ' + secondaryKey && await storage.get('checked') == checkedValue) {
                     setSaved(true);
                 }
             }}>ENABLE</Button>
@@ -110,8 +110,8 @@ export default function Header() {
             }} />
             <br />
             <div id='inputs'>
-                <Select size='lg' data={['ALT', 'CONTROL', 'SHIFT']} defaultValue='ALT' onChange={(value) => {
-                    setMainKey(value);
+                <Select size='lg' data={['ALT', 'CONTROL', 'SHIFT']} value={primaryKey || 'ALT'} onChange={(value) => {
+                    setPrimaryKey(value);
 
                 }} /><TextInput disabled={disabled} size='lg' placeholder='Shortcut...' id='shortcut' value={secondaryKey || 'Q'} onChange={(e) => e.preventDefault()} onKeyDown={(e) => {
                     e.preventDefault();
@@ -126,7 +126,7 @@ export default function Header() {
                     });
                     if (e.key.toUpperCase() != ' ') {
                         document.getElementsByClassName('mantine-rwipcq')[0].classList.remove('error');
-                        setMainKey('ALT');
+                        setPrimaryKey('ALT');
                         setSecondaryKey(e.key.toUpperCase());
                     }
                     else {
@@ -140,7 +140,7 @@ export default function Header() {
             <div id="buttons">
                 <Button onClick={async () => {
                     setSaved(true);
-                    await storage.set('shortcut', mainKey + ' + ' + secondaryKey);
+                    await storage.set('shortcut', primaryKey + ' + ' + secondaryKey);
                     await storage.set('checked', checkedValue);
                     document.getElementsByTagName('button')[2].style.backgroundColor = 'green';
                     setTimeout(() => {
@@ -152,7 +152,7 @@ export default function Header() {
                 <Button onClick={async () => {
                     setSaved(true);
                     setCheckedValue('0');
-                    setMainKey('ALT');
+                    setPrimaryKey('ALT');
                     setSecondaryKey('Q');
                     await storage.set('checked', '0');
                     await storage.set('shortcut', 'ALT + Q');
