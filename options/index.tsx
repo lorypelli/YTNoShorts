@@ -110,7 +110,7 @@ export default function Options() {
             }} />
             <br />
             <div id='inputs'>
-                <Select size='lg' data={['ALT', 'CONTROL', 'SHIFT']} value={primaryKey || 'ALT'} onKeyDown={(e) => {
+                <Select disabled={disabled} size='lg' data={['ALT', 'CONTROL', 'SHIFT']} value={primaryKey || 'ALT'} onKeyDown={(e) => {
                     if (e.altKey) {
                         setPrimaryKey('ALT');
                     }
