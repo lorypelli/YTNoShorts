@@ -110,7 +110,7 @@ export default function Header() {
             }} />
             <br />
             <div id='inputs'>
-                <Select size='lg' data={['ALT', 'CTRL', 'SHIFT']} defaultValue='ALT' onChange={(value) => {
+                <Select size='lg' data={['ALT', 'CONTROL', 'SHIFT']} defaultValue='ALT' onChange={(value) => {
                     setMainKey(value);
 
                 }} /><TextInput disabled={disabled} size='lg' placeholder='Shortcut...' id='shortcut' value={secondaryKey || 'Q'} onChange={(e) => e.preventDefault()} onKeyDown={(e) => {
