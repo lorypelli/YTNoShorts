@@ -15,7 +15,7 @@ export default function Options() {
     useEffect(() => {
         const checked = storage.get('checked');
         const shortcut = storage.get('shortcut');
-        Promise.resolve(checked).then(async c => {
+        Promise.resolve(checked).then(async (c) => {
             if (c == null) {
                 await storage.set('checked', '0');
                 c = '0';
@@ -25,7 +25,7 @@ export default function Options() {
             }
             setCheckedValue(c);
         });
-        Promise.resolve(shortcut).then(async s => {
+        Promise.resolve(shortcut).then(async (s) => {
             if (s == null) {
                 await storage.set('shortcut', 'ALT + Q');
                 s = 'ALT + Q';
@@ -35,7 +35,7 @@ export default function Options() {
         });
         setInterval(() => {
             const extension = storage.get('extension');
-            Promise.resolve(extension).then(async e => {
+            Promise.resolve(extension).then(async (e) => {
                 if (e == null) {
                     await storage.set('extension', '0');
                     e = '0';
@@ -92,7 +92,7 @@ export default function Options() {
             <br />
             <Switch checked={checkedValue == '1' ? true : false} label="Always replace youtube shorts layout with normal one" onClick={(e) => {
                 const checked = storage.get('checked');
-                Promise.resolve(checked).then(c => {
+                Promise.resolve(checked).then((c) => {
                     if (e.target.checked == true ? '1' : '0' != c) {
                         setSaved(false);
                     }
@@ -110,14 +110,33 @@ export default function Options() {
             }} />
             <br />
             <div id='inputs'>
-                <Select size='lg' data={['ALT', 'CONTROL', 'SHIFT']} value={primaryKey || 'ALT'} onChange={(value) => {
+                <Select size='lg' data={['ALT', 'CONTROL', 'SHIFT']} value={primaryKey || 'ALT'} onKeyDown={(e) => {
+                    if (e.altKey) {
+                        setPrimaryKey('ALT');
+                    }
+                    else if (e.ctrlKey) {
+                        setPrimaryKey('CONTROL');
+                    }
+                    else if (e.shiftKey) {
+                        setPrimaryKey('SHIFT');
+                    }
+                }} onChange={(value) => {
                     setPrimaryKey(value);
+                    const shortcut = storage.get('shortcut');
+                    Promise.resolve(shortcut).then(s => {
+                        if (value != s.split('+')[0].trim()) {
+                            setSaved(false);
+                        }
+                        else {
+                            setSaved(true);
+                        }
+                    });
 
                 }} /><TextInput disabled={disabled} size='lg' placeholder='Shortcut...' id='shortcut' value={secondaryKey || 'Q'} onChange={(e) => e.preventDefault()} onKeyDown={(e) => {
                     e.preventDefault();
                     const shortcut = storage.get('shortcut');
-                    Promise.resolve(shortcut).then(s => {
-                        if (e.target.value != s) {
+                    Promise.resolve(shortcut).then((s) => {
+                        if (e.target.value != s.split('+')[1].trim()) {
                             setSaved(false);
                         }
                         else {
@@ -126,7 +145,7 @@ export default function Options() {
                     });
                     if (e.key.toUpperCase() != ' ') {
                         document.getElementsByClassName('mantine-rwipcq')[0].classList.remove('error');
-                        setPrimaryKey('ALT');
+                        setPrimaryKey(primaryKey);
                         setSecondaryKey(e.key.toUpperCase());
                     }
                     else {

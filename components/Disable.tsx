@@ -6,7 +6,7 @@ export default function Disable() {
     const storage = new Storage();
     const [extDisabled, setExtDisabled] = useState('0');
     const extension = storage.get('extension');
-    Promise.resolve(extension).then(async e => {
+    Promise.resolve(extension).then(async (e) => {
         if (e == null) {
             await storage.set('extension', '0');
             setExtDisabled('0');

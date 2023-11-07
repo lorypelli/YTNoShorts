@@ -7,7 +7,7 @@ export default function Header() {
     const [primaryKey, setPrimaryKey] = useState('');
     const [secondaryKey, setSecondaryKey] = useState('');
     const shortcut = storage.get('shortcut');
-    Promise.resolve(shortcut).then(async s => {
+    Promise.resolve(shortcut).then(async (s) => {
         if (s == null) {
             await storage.set('shortcut', 'ALT + Q');
             setPrimaryKey('ALT');
