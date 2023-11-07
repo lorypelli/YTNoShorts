@@ -73,8 +73,10 @@ br {
 }
 
 .mantine-rwipcq {
-    font-size: 25px;
     width: 115px;
+    font-size: 25px;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 .mantine-1v7s5f8:has(input:disabled) {

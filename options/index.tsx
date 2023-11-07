@@ -7,7 +7,8 @@ import versionStatus from '~versionStatus';
 export default function Header() {
     const storage = new Storage();
     const [checkedValue, setCheckedValue] = useState('0');
-    const [shortcutValue, setShortcutValue] = useState('');
+    const [mainKey, setMainKey] = useState('');
+    const [secondaryKey, setSecondaryKey] = useState('');
     const [disabled, setDisabled] = useState(false);
     const [extDisabled, setExtDisabled] = useState('0');
     const [saved, setSaved] = useState(true);
@@ -29,7 +30,8 @@ export default function Header() {
                 await storage.set('shortcut', 'ALT + Q');
                 s = 'ALT + Q';
             }
-            setShortcutValue(s);
+            setMainKey(s.split('+')[0].trim());
+            setSecondaryKey(s.split('+')[1].trim());
         });
         setInterval(() => {
             const extension = storage.get('extension');
@@ -72,7 +74,7 @@ export default function Header() {
                 document.getElementById('disable').style.display = 'block';
                 await storage.set('extension', '0');
                 setExtDisabled('0');
-                if (await storage.get('shortcut') == shortcutValue && await storage.get('checked') == checkedValue) {
+                if (await storage.get('shortcut') == mainKey + ' + ' + secondaryKey && await storage.get('checked') == checkedValue) {
                     setSaved(true);
                 }
             }}>ENABLE</Button>
@@ -108,7 +110,10 @@ export default function Header() {
             }} />
             <br />
             <div id='inputs'>
-                <Select size='lg' data={['ALT', 'CTRL', 'SHIFT']} defaultValue='ALT' /><TextInput disabled={disabled} size='lg' placeholder='Shortcut...' id='shortcut' value={shortcutValue || 'ALT + Q'} onChange={(e) => e.preventDefault()} onKeyDown={(e) => {
+                <Select size='lg' data={['ALT', 'CTRL', 'SHIFT']} defaultValue='ALT' onChange={(value) => {
+                    setMainKey(value);
+
+                }} /><TextInput disabled={disabled} size='lg' placeholder='Shortcut...' id='shortcut' value={secondaryKey || 'Q'} onChange={(e) => e.preventDefault()} onKeyDown={(e) => {
                     e.preventDefault();
                     const shortcut = storage.get('shortcut');
                     Promise.resolve(shortcut).then(s => {
@@ -119,9 +124,10 @@ export default function Header() {
                             setSaved(true);
                         }
                     });
-                    if (e.key.toUpperCase() != ' ' && e.key.toUpperCase() != 'ALT') {
+                    if (e.key.toUpperCase() != ' ') {
                         document.getElementsByClassName('mantine-rwipcq')[0].classList.remove('error');
-                        setShortcutValue('ALT' + ' + ' + e.key.toUpperCase());
+                        setMainKey('ALT');
+                        setSecondaryKey(e.key.toUpperCase());
                     }
                     else {
                         document.getElementsByClassName('mantine-rwipcq')[0].classList.add('error');
@@ -134,7 +140,7 @@ export default function Header() {
             <div id="buttons">
                 <Button onClick={async () => {
                     setSaved(true);
-                    await storage.set('shortcut', shortcutValue);
+                    await storage.set('shortcut', mainKey + ' + ' + secondaryKey);
                     await storage.set('checked', checkedValue);
                     document.getElementsByTagName('button')[2].style.backgroundColor = 'green';
                     setTimeout(() => {
@@ -146,7 +152,8 @@ export default function Header() {
                 <Button onClick={async () => {
                     setSaved(true);
                     setCheckedValue('0');
-                    setShortcutValue('ALT + Q');
+                    setMainKey('ALT');
+                    setSecondaryKey('Q');
                     await storage.set('checked', '0');
                     await storage.set('shortcut', 'ALT + Q');
                     setDisabled(false);
