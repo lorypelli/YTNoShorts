@@ -8,7 +8,7 @@ export const config: PlasmoCSConfig = {
 };
 let isImageCreated = false;
 let hasImage = false;
-const observer = new MutationObserver(list => {
+const observer = new MutationObserver((list) => {
     for (let i = 0; i < list.length; i++) {
         if (list[i].type == 'childList') {
             isImageCreated = false;
@@ -54,19 +54,19 @@ setInterval(async () => {
                     let x = 0;
                     let q = 0;
                     for (let i = 0; i < shorts.length; i++) {
-                        shorts[i].getAttributeNames().forEach(a => {
+                        shorts[i].getAttributeNames().forEach((a) => {
                             if (a == 'is-active') {
-                                shorts[i].childNodes.forEach(b => {
-                                    (b as unknown as Element).classList?.forEach(c => {
+                                shorts[i].childNodes.forEach((b) => {
+                                    (b as unknown as Element).classList?.forEach((c) => {
                                         j += 1;
                                         if (c == 'overlay') {
-                                            shorts[i].childNodes[j].childNodes.forEach(d => {
+                                            shorts[i].childNodes[j].childNodes.forEach((d) => {
                                                 x += 1;
                                                 if ((d as unknown as Element).tagName?.toLowerCase() == 'ytd-reel-player-overlay-renderer') {
-                                                    shorts[i].childNodes[j].childNodes[x - 1].childNodes.forEach(e => {
+                                                    shorts[i].childNodes[j].childNodes[x - 1].childNodes.forEach((e) => {
                                                         q += 1;
                                                         if ((e as unknown as Element).id == 'actions') {
-                                                            shorts[i].childNodes[j].childNodes[x - 1].childNodes[q - 1].childNodes.forEach(f => {
+                                                            shorts[i].childNodes[j].childNodes[x - 1].childNodes[q - 1].childNodes.forEach((f) => {
                                                                 if (f.tagName?.toLowerCase() == 'img') {
                                                                     hasImage = true;
                                                                 }
@@ -89,8 +89,9 @@ setInterval(async () => {
                         window.location.href = `https://www.youtube.com/watch?v=${url.split('/')[4]}`;
                     };
                 }
-                window.addEventListener('keydown', async e => {
-                    if (e.altKey && e.key.toUpperCase() == (await storage.get('shortcut')).split('+')[1].trim()) {
+                window.addEventListener('keydown', async (e) => {
+                    e.preventDefault();
+                    if ((e.altKey && (await storage.get('shortcut')).split('+')[0].trim() == 'ALT' || e.ctrlKey && (await storage.get('shortcut')).split('+')[0].trim() == 'CONTROL' || e.shiftKey && (await storage.get('shortcut')).split('+')[0].trim() == 'SHIFT') && e.key.toUpperCase() == (await storage.get('shortcut')).split('+')[1].trim()) {
                         window.location.href = `https://www.youtube.com/watch?v=${url.split('/')[4]}`;
                     }
                 });
