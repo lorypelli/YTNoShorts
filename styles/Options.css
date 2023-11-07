@@ -74,6 +74,7 @@ br {
 
 .mantine-rwipcq {
     font-size: 25px;
+    width: 115px;
 }
 
 .mantine-1v7s5f8:has(input:disabled) {
@@ -93,7 +94,16 @@ br {
 }
 
 .mantine-1v7s5f8 {
+    display: flex;
     margin-bottom: 20px;
+}
+
+.mantine-1v7s5f8:nth-child(1) {
+    justify-content: right;
+}
+
+.mantine-1v7s5f8:nth-child(2) {
+    justify-content: left;
 }
 
 .mantine-1pn6kd {
@@ -101,17 +111,38 @@ br {
 }
 
 .mantine-111xx5d {
-    min-width: 3rem;
+    min-width: 48px;
+}
+
+.mantine-17pqk4i {
+    width: 115px;
+    font-size: 25px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+#inputs {
+    display: flex;
+    justify-content: space-between;
+}
+
+.mantine-i5m9q6 {
+    left: 0px !important;
+    width: 115px !important;
+}
+
+.mantine-1105snk {
+    display: none;
 }
 
 ::selection {
-    background-color: orange;
-    color: #363636;
+    background-color: orange !important;
+    color: #363636 !important;
 }
 
 ::-moz-selection {
-    background-color: orange;
-    color: #363636;
+    background-color: orange !important;
+    color: #363636 !important;
 }
 
 ::-webkit-scrollbar {

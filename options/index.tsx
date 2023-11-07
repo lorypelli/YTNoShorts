@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useEffect, useState } from 'react';
-import { Switch, TextInput, Button, MantineProvider } from '@mantine/core';
+import { Switch, TextInput, Button, MantineProvider, Select } from '@mantine/core';
 import { Storage } from '@plasmohq/storage';
 import '../styles/Options.css';
 import versionStatus from '~versionStatus';
@@ -107,28 +107,30 @@ export default function Header() {
                 setCheckedValue(e.target.checked == true ? '1' : '0');
             }} />
             <br />
-            <TextInput disabled={disabled} size='lg' placeholder='Shortcut...' id='shortcut' value={shortcutValue || 'ALT + Q'} onChange={(e) => e.preventDefault()} onKeyDown={(e) => {
-                e.preventDefault();
-                const shortcut = storage.get('shortcut');
-                Promise.resolve(shortcut).then(s => {
-                    if (e.target.value != s) {
-                        setSaved(false);
+            <div id='inputs'>
+                <Select size='lg' data={['ALT', 'CTRL', 'SHIFT']} defaultValue='ALT' /><TextInput disabled={disabled} size='lg' placeholder='Shortcut...' id='shortcut' value={shortcutValue || 'ALT + Q'} onChange={(e) => e.preventDefault()} onKeyDown={(e) => {
+                    e.preventDefault();
+                    const shortcut = storage.get('shortcut');
+                    Promise.resolve(shortcut).then(s => {
+                        if (e.target.value != s) {
+                            setSaved(false);
+                        }
+                        else {
+                            setSaved(true);
+                        }
+                    });
+                    if (e.key.toUpperCase() != ' ' && e.key.toUpperCase() != 'ALT') {
+                        document.getElementsByClassName('mantine-rwipcq')[0].classList.remove('error');
+                        setShortcutValue('ALT' + ' + ' + e.key.toUpperCase());
                     }
                     else {
-                        setSaved(true);
+                        document.getElementsByClassName('mantine-rwipcq')[0].classList.add('error');
+                        setTimeout(() => {
+                            document.getElementsByClassName('mantine-rwipcq')[0].classList.remove('error');
+                        }, 500);
                     }
-                });
-                if (e.key.toUpperCase() != ' ' && e.key.toUpperCase() != 'ALT') {
-                    document.getElementsByClassName('mantine-rwipcq')[0].classList.remove('error');
-                    setShortcutValue('ALT' + ' + ' + e.key.toUpperCase());
-                }
-                else {
-                    document.getElementsByClassName('mantine-rwipcq')[0].classList.add('error');
-                    setTimeout(() => {
-                        document.getElementsByClassName('mantine-rwipcq')[0].classList.remove('error');
-                    }, 500);
-                }
-            }} />
+                }} />
+            </div>
             <div id="buttons">
                 <Button onClick={async () => {
                     setSaved(true);
