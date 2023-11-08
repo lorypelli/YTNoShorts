@@ -132,7 +132,7 @@ export default function Options() {
                         }
                     });
 
-                }} /><TextInput disabled={disabled} size='lg' placeholder='Shortcut...' id='shortcut' value={secondaryKey || 'Q'} onChange={(e) => e.preventDefault()} onKeyDown={(e) => {
+                }} /><TextInput disabled={disabled} size='lg' value={secondaryKey || 'Q'} onChange={(e) => e.preventDefault()} onKeyDown={(e) => {
                     e.preventDefault();
                     const shortcut = storage.get('shortcut');
                     Promise.resolve(shortcut).then((s) => {
