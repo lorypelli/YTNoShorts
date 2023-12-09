@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Switch, TextInput, Button, MantineProvider, Select } from '@mantine/core';
 import { Storage } from '@plasmohq/storage';
-import '../styles/Options.css';
+import './styles/Options.css';
 import versionStatus from '~versionStatus';
 export default function Options() {
     const storage = new Storage();
