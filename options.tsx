@@ -1,62 +1,30 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useEffect, useState } from 'react';
 import { Switch, TextInput, Button, MantineProvider, Select } from '@mantine/core';
-import { Storage } from '@plasmohq/storage';
+import { useStorage } from '@plasmohq/storage/hook';
 import './styles/Options.css';
 import versionStatus from '~versionStatus';
 export default function Options() {
-    const storage = new Storage();
-    const [checkedValue, setCheckedValue] = useState('0');
+    const [checkedValue, setCheckedValue] = useState(false);
     const [primaryKey, setPrimaryKey] = useState('');
     const [secondaryKey, setSecondaryKey] = useState('');
     const [disabled, setDisabled] = useState(false);
-    const [extDisabled, setExtDisabled] = useState('0');
+    const [extDisabled, setExtDisabled] = useState(false);
     const [saved, setSaved] = useState(true);
+    const [checked, setChecked] = useStorage('checked', false);
+    const [shortcut, setShortcut] = useStorage('shortcut', 'ALT + Q');
+    const [extension, setExtension] = useStorage('extension', true);
     useEffect(() => {
-        const checked = storage.get('checked');
-        const shortcut = storage.get('shortcut');
-        Promise.resolve(checked).then(async (c) => {
-            if (c == null) {
-                await storage.set('checked', '0');
-                c = '0';
-            }
-            if (c == '1') {
-                setDisabled(true);
-            }
-            setCheckedValue(c);
-        });
-        Promise.resolve(shortcut).then(async (s) => {
-            if (s == null) {
-                await storage.set('shortcut', 'ALT + Q');
-                s = 'ALT + Q';
-            }
-            setPrimaryKey(s.split('+')[0].trim());
-            setSecondaryKey(s.split('+')[1].trim());
-        });
-        setInterval(() => {
-            const extension = storage.get('extension');
-            Promise.resolve(extension).then(async (e) => {
-                if (e == null) {
-                    await storage.set('extension', '0');
-                    e = '0';
-                }
-                if (e == '1') {
-                    document.getElementById('__plasmo').classList.add('disabled');
-                    document.getElementById('enable').style.display = 'block';
-                    document.getElementById('disable').style.display = 'none';
-                }
-                else {
-                    document.getElementById('__plasmo').classList.remove('disabled');
-                    document.getElementById('enable').style.display = 'none';
-                    document.getElementById('disable').style.display = 'block';
-                }
-                setExtDisabled(e);
-            });
-        });
-    }, []);
+        if (checked) {
+            setDisabled(true);
+        }
+        setCheckedValue(checked);
+        setPrimaryKey(shortcut.split('+')[0].trim());
+        setSecondaryKey(shortcut.split('+')[1].trim());
+    }, [extension, checked, shortcut]);
     useEffect(() => {
         function beforeUnloadHandler(e: BeforeUnloadEvent) {
-            if (!saved && !(extDisabled == '1' ? true : false)) {
+            if (!saved && !extDisabled) {
                 e.preventDefault();
                 e.returnValue = '';
             }
@@ -72,9 +40,9 @@ export default function Options() {
                 document.getElementById('__plasmo').classList.remove('disabled');
                 document.getElementById('enable').style.display = 'none';
                 document.getElementById('disable').style.display = 'block';
-                await storage.set('extension', '0');
-                setExtDisabled('0');
-                if (await storage.get('shortcut') == primaryKey + ' + ' + secondaryKey && await storage.get('checked') == checkedValue) {
+                setExtension(true);
+                setExtDisabled(false);
+                if (shortcut == primaryKey + ' + ' + secondaryKey && checked == checkedValue) {
                     setSaved(true);
                 }
             }}>ENABLE</Button>
@@ -85,15 +53,14 @@ export default function Options() {
                 document.getElementById('enable').style.display = 'block';
                 document.getElementById('disable').style.display = 'none';
                 document.getElementById('status').style.display = 'none';
-                await storage.set('extension', '1');
-                setExtDisabled('1');
+                setExtension(false);
+                setExtDisabled(true);
             }}>DISABLE</Button>
             <br />
             <br />
-            <Switch checked={checkedValue == '1' ? true : false} label="Always replace youtube shorts layout with normal one" onClick={(e) => {
-                const checked = storage.get('checked');
+            <Switch checked={checkedValue} label="Always replace youtube shorts layout with normal one" onClick={(e) => {
                 Promise.resolve(checked).then((c) => {
-                    if (e.target.checked == true ? '1' : '0' != c) {
+                    if (e.target.checked != c) {
                         setSaved(false);
                     }
                     else {
@@ -106,7 +73,7 @@ export default function Options() {
                 else {
                     setDisabled(false);
                 }
-                setCheckedValue(e.target.checked == true ? '1' : '0');
+                setCheckedValue(e.target.checked);
             }} />
             <br />
             <div id='inputs'>
@@ -122,27 +89,21 @@ export default function Options() {
                     }
                 }} onChange={(value) => {
                     setPrimaryKey(value);
-                    const shortcut = storage.get('shortcut');
-                    Promise.resolve(shortcut).then(s => {
-                        if (value != s.split('+')[0].trim()) {
-                            setSaved(false);
-                        }
-                        else {
-                            setSaved(true);
-                        }
-                    });
+                    if (value != shortcut.split('+')[0].trim()) {
+                        setSaved(false);
+                    }
+                    else {
+                        setSaved(true);
+                    }
 
                 }} /><TextInput disabled={disabled} size='lg' value={secondaryKey || 'Q'} onChange={(e) => e.preventDefault()} onKeyDown={(e) => {
                     e.preventDefault();
-                    const shortcut = storage.get('shortcut');
-                    Promise.resolve(shortcut).then((s) => {
-                        if (e.target.value != s.split('+')[1].trim()) {
-                            setSaved(false);
-                        }
-                        else {
-                            setSaved(true);
-                        }
-                    });
+                    if (e.target.value != shortcut.split('+')[1].trim()) {
+                        setSaved(false);
+                    }
+                    else {
+                        setSaved(true);
+                    }
                     if (e.key.toUpperCase() != ' ') {
                         document.getElementsByClassName('mantine-rwipcq')[0].classList.remove('error');
                         setPrimaryKey(primaryKey);
@@ -159,8 +120,8 @@ export default function Options() {
             <div id="buttons">
                 <Button onClick={async () => {
                     setSaved(true);
-                    await storage.set('shortcut', primaryKey + ' + ' + secondaryKey);
-                    await storage.set('checked', checkedValue);
+                    setShortcut(primaryKey + ' + ' + secondaryKey);
+                    setChecked(checkedValue);
                     document.getElementsByTagName('button')[2].style.backgroundColor = 'green';
                     setTimeout(() => {
                         document.getElementsByTagName('button')[2].style.backgroundColor = 'blue';
@@ -170,11 +131,11 @@ export default function Options() {
                 <br />
                 <Button onClick={async () => {
                     setSaved(true);
-                    setCheckedValue('0');
+                    setCheckedValue(false);
                     setPrimaryKey('ALT');
                     setSecondaryKey('Q');
-                    await storage.set('checked', '0');
-                    await storage.set('shortcut', 'ALT + Q');
+                    setChecked(false);
+                    setShortcut('ALT + Q');
                     setDisabled(false);
                     document.getElementsByTagName('button')[3].style.backgroundColor = 'green';
                     setTimeout(() => {

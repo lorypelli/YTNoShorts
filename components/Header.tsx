@@ -1,23 +1,15 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Code, MantineProvider } from '@mantine/core';
-import { Storage } from '@plasmohq/storage';
+import { useStorage } from '@plasmohq/storage/hook';
 export default function Header() {
-    const storage = new Storage();
     const [primaryKey, setPrimaryKey] = useState('');
     const [secondaryKey, setSecondaryKey] = useState('');
-    const shortcut = storage.get('shortcut');
-    Promise.resolve(shortcut).then(async (s) => {
-        if (s == null) {
-            await storage.set('shortcut', 'ALT + Q');
-            setPrimaryKey('ALT');
-            setSecondaryKey('Q');
-        }
-        else {
-            setPrimaryKey(s.split('+')[0].trim());
-            setSecondaryKey(s.split('+')[1].trim());
-        }
-    });
+    const shortcut = useStorage('shortcut', 'ALT + Q')[0];
+    useEffect(() => {
+        setPrimaryKey(shortcut.split('+')[0].trim());
+        setSecondaryKey(shortcut.split('+')[1].trim());
+    }, []);
     return (
         <>
             <img className='right' src='https://i.ibb.co/LrVY3Rx/icon.png' width={25} height={25} /><h1 className='inline'>Youtube No Shorts</h1><img className='left' src='https://i.ibb.co/LrVY3Rx/icon.png' width={25} height={25} />

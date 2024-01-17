@@ -1,27 +1,20 @@
 /* eslint-disable prefer-const */
-import React, { useState } from 'react';
-import { Storage } from '@plasmohq/storage';
+import React, { useEffect, useState } from 'react';
 import { Button } from '@mantine/core';
+import { useStorage } from '@plasmohq/storage/hook';
 export default function Disable() {
-    const storage = new Storage();
-    const [extDisabled, setExtDisabled] = useState('0');
-    const extension = storage.get('extension');
-    Promise.resolve(extension).then(async (e) => {
-        if (e == null) {
-            await storage.set('extension', '0');
-            setExtDisabled('0');
-        }
-        else {
-            setExtDisabled(e);
-        }
-    });
+    const [extDisabled, setExtDisabled] = useState(false);
+    const [extension, setExtension] = useStorage('extension', true);
+    useEffect(() => {
+        setExtDisabled(extension);
+    }, []);
     return (
         <>
-            <h1>Extension is currently {extDisabled == '1' ? 'disabled' : 'enabled'}</h1>
+            <h1>Extension is currently {extDisabled ? 'disabled' : 'enabled'}</h1>
             <Button id='disable' onClick={async () => {
-                await storage.set('extension', extDisabled != '1' ? '1' : '0');
-                setExtDisabled(extDisabled != '1' ? '1' : '0');
-            }}>{extDisabled != '1' ? 'DISABLE' : 'ENABLE'}</Button>
+                setExtension(!extDisabled);
+                setExtDisabled(!extDisabled);
+            }}>{!extDisabled ? 'DISABLE' : 'ENABLE'}</Button>
         </>
     );
 }
