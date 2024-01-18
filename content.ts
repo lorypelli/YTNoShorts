@@ -1,15 +1,16 @@
 import type { PlasmoCSConfig } from 'plasmo';
-import { useStorage } from '@plasmohq/storage/hook';
+import { Storage } from '@plasmohq/storage';
 export const config: PlasmoCSConfig = {
     matches: [
         'https://www.youtube.com/*'
     ]
 };
-const checked = useStorage('checked', false)[0];
-const shortcut = useStorage('shortcut', 'ALT + Q')[0];
-const extension = useStorage('extension', true)[0];
+const storage = new Storage();
 setInterval(async () => {
     const url = window.location.href;
+    const checked = await storage.get('checked');
+    const extension = await storage.get('extension');
+    const shortcut = await storage.get('shortcut');
     if (url && url.startsWith('https://www.youtube.com/')) {
         if (url.includes('/shorts')) {
             if (checked && !extension) {
