@@ -9,7 +9,7 @@ export default function Header() {
     useEffect(() => {
         setPrimaryKey(shortcut.split('+')[0].trim());
         setSecondaryKey(shortcut.split('+')[1].trim());
-    }, []);
+    }, [shortcut]);
     return (
         <>
             <img className='right' src='https://i.ibb.co/LrVY3Rx/icon.png' width={25} height={25} /><h1 className='inline'>Youtube No Shorts</h1><img className='left' src='https://i.ibb.co/LrVY3Rx/icon.png' width={25} height={25} />
