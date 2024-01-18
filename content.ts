@@ -8,9 +8,21 @@ export const config: PlasmoCSConfig = {
 const storage = new Storage();
 setInterval(async () => {
     const url = window.location.href;
-    const checked = await storage.get('checked') || false;
-    const extension = await storage.get('extension') || false;
-    const shortcut = await storage.get('shortcut') || 'ALT + Q';
+    let checked = await storage.get<boolean>('checked');
+    let extension = await storage.get<boolean>('extension');
+    let shortcut = await storage.get('shortcut');
+    if (!checked) {
+        await storage.set('checked', false);
+        checked = false;
+    }
+    else if (!extension) {
+        await storage.set('extension', true);
+        extension = true;
+    }
+    else if (!shortcut) {
+        await storage.set('shortcut', 'ALT + Q');
+        shortcut = 'ALT + Q';
+    }
     if (url && url.startsWith('https://www.youtube.com/')) {
         if (url.includes('/shorts')) {
             if (checked && !extension) {
