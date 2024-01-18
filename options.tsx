@@ -28,7 +28,7 @@ export default function Options() {
         if (checked) {
             setDisabled(true);
         }
-        setExtDisabled(extension);
+        setExtDisabled(!extension);
         setCheckedValue(checked);
         setPrimaryKey(shortcut.split('+')[0].trim());
         setSecondaryKey(shortcut.split('+')[1].trim());

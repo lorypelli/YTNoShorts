@@ -11,15 +11,15 @@ setInterval(async () => {
     let checked = await storage.get<boolean>('checked');
     let extension = await storage.get<boolean>('extension');
     let shortcut = await storage.get('shortcut');
-    if (!checked) {
+    if (checked == null) {
         await storage.set('checked', false);
         checked = false;
     }
-    if (!extension) {
+    if (extension == null) {
         await storage.set('extension', true);
         extension = true;
     }
-    if (!shortcut) {
+    if (shortcut == null) {
         await storage.set('shortcut', 'ALT + Q');
         shortcut = 'ALT + Q';
     }
