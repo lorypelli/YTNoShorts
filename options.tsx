@@ -15,9 +15,20 @@ export default function Options() {
     const [shortcut, setShortcut] = useStorage('shortcut', 'ALT + Q');
     const [extension, setExtension] = useStorage('extension', true);
     useEffect(() => {
+        if (!extension) {
+            document.getElementById('__plasmo').classList.add('disabled');
+            document.getElementById('enable').style.display = 'block';
+            document.getElementById('disable').style.display = 'none';
+        }
+        else {
+            document.getElementById('__plasmo').classList.remove('disabled');
+            document.getElementById('enable').style.display = 'none';
+            document.getElementById('disable').style.display = 'block';
+        }
         if (checked) {
             setDisabled(true);
         }
+        setExtDisabled(extension);
         setCheckedValue(checked);
         setPrimaryKey(shortcut.split('+')[0].trim());
         setSecondaryKey(shortcut.split('+')[1].trim());
