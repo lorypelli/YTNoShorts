@@ -59,14 +59,12 @@ export default function Options() {
             <br />
             <br />
             <Switch checked={checkedValue} label="Always replace youtube shorts layout with normal one" onClick={(e) => {
-                Promise.resolve(checked).then((c) => {
-                    if (e.target.checked != c) {
-                        setSaved(false);
-                    }
-                    else {
-                        setSaved(true);
-                    }
-                });
+                if (e.target.checked != checked) {
+                    setSaved(false);
+                }
+                else {
+                    setSaved(true);
+                }
                 if (e.target.checked) {
                     setDisabled(true);
                 }

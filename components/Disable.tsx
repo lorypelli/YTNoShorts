@@ -7,7 +7,7 @@ export default function Disable() {
     const [extension, setExtension] = useStorage('extension', true);
     useEffect(() => {
         setExtDisabled(extension);
-    }, []);
+    }, [extension]);
     return (
         <>
             <h1>Extension is currently {extDisabled ? 'disabled' : 'enabled'}</h1>
