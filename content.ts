@@ -15,20 +15,20 @@ setInterval(async () => {
         await storage.set('checked', false);
         checked = false;
     }
-    else if (!extension) {
+    if (!extension) {
         await storage.set('extension', true);
         extension = true;
     }
-    else if (!shortcut) {
+    if (!shortcut) {
         await storage.set('shortcut', 'ALT + Q');
         shortcut = 'ALT + Q';
     }
     if (url && url.startsWith('https://www.youtube.com/')) {
         if (url.includes('/shorts')) {
-            if (checked && !extension) {
+            if (checked && extension) {
                 window.location.href = `https://www.youtube.com/watch?v=${url.split('/')[4]}`;
             }
-            else if (!checked && !extension) {        
+            else if (!checked && extension) {        
                 window.addEventListener('keydown', async (e) => {
                     e.preventDefault();
                     if ((e.altKey && shortcut.split('+')[0].trim() == 'ALT' || e.ctrlKey && shortcut.split('+')[0].trim() == 'CONTROL' || e.shiftKey && shortcut.split('+')[0].trim() == 'SHIFT') && e.key.toUpperCase() == shortcut.split('+')[1].trim()) {

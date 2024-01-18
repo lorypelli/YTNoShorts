@@ -10,11 +10,11 @@ export default function Disable() {
     }, [extension]);
     return (
         <>
-            <h1>Extension is currently {extDisabled ? 'disabled' : 'enabled'}</h1>
+            <h1>Extension is currently {!extDisabled ? 'disabled' : 'enabled'}</h1>
             <Button id='disable' onClick={async () => {
                 setExtension(!extDisabled);
                 setExtDisabled(!extDisabled);
-            }}>{!extDisabled ? 'DISABLE' : 'ENABLE'}</Button>
+            }}>{extDisabled ? 'DISABLE' : 'ENABLE'}</Button>
         </>
     );
 }
