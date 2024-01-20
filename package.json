@@ -1,7 +1,7 @@
 {
   "name": "youtube-no-shorts",
   "displayName": "YTNoShorts",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "description": "Replace youtube shorts video version with normal one",
   "author": "LoryPelli",
   "scripts": {
@@ -11,7 +11,7 @@
     "@mantine/core": "^6.0.21",
     "@plasmohq/storage": "^1.9.0",
     "@tabler/icons-react": "^2.46.0",
-    "plasmo": "^0.84.0",
+    "plasmo": "^0.84.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

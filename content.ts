@@ -24,17 +24,20 @@ setInterval(async () => {
         shortcut = 'ALT + Q';
     }
     if (url && url.startsWith('https://www.youtube.com/')) {
-        if (url.includes('/shorts')) {
+        const split = url.split('/')[4];
+        if (url.includes('/shorts') && split.trim() != 'shorts') {
             if (checked && extension) {
-                window.location.href = `https://www.youtube.com/watch?v=${url.split('/')[4]}`;
+                window.location.replace(`https://www.youtube.com/watch?v=${split}`);
             }
-            else if (!checked && extension) {        
-                window.addEventListener('keydown', async (e) => {
-                    e.preventDefault();
-                    if ((e.altKey && shortcut.split('+')[0].trim() == 'ALT' || e.ctrlKey && shortcut.split('+')[0].trim() == 'CONTROL' || e.shiftKey && shortcut.split('+')[0].trim() == 'SHIFT') && e.key.toUpperCase() == shortcut.split('+')[1].trim()) {
-                        window.location.href = `https://www.youtube.com/watch?v=${url.split('/')[4]}`;
-                    }
-                });
+            else if (!checked && extension) {    
+                if (split.trim() != 'shorts') {
+                    window.addEventListener('keydown', async (e) => {
+                        e.preventDefault();
+                        if ((e.altKey && shortcut.split('+')[0].trim() == 'ALT' || e.ctrlKey && shortcut.split('+')[0].trim() == 'CONTROL' || e.shiftKey && shortcut.split('+')[0].trim() == 'SHIFT') && e.key.toUpperCase() == shortcut.split('+')[1].trim()) {
+                            window.location.replace(`https://www.youtube.com/watch?v=${split}`);
+                        }
+                    });
+                }
             }
         }
     }
