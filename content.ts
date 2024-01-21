@@ -25,12 +25,13 @@ setInterval(async () => {
     }
     if (url && url.startsWith('https://www.youtube.com/')) {
         const split = url.split('/')[4];
-        if (url.includes('/shorts') && split.trim() != 'shorts') {
+        const isChannel = url.split('/')[3].startsWith('@');
+        if (url.includes('/shorts') && !isChannel) {
             if (checked && extension) {
                 window.location.replace(`https://www.youtube.com/watch?v=${split}`);
             }
             else if (!checked && extension) {    
-                if (split.trim() != 'shorts') {
+                if (!isChannel) {
                     window.addEventListener('keydown', async (e) => {
                         e.preventDefault();
                         if ((e.altKey && shortcut.split('+')[0].trim() == 'ALT' || e.ctrlKey && shortcut.split('+')[0].trim() == 'CONTROL' || e.shiftKey && shortcut.split('+')[0].trim() == 'SHIFT') && e.key.toUpperCase() == shortcut.split('+')[1].trim()) {
