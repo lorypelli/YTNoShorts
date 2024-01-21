@@ -91,7 +91,7 @@ br {
     background-color: red;
 }
 
-#buttons > :nth-child(7) {
+#buttons > :last-child {
     background-color: blueviolet;
 }
 

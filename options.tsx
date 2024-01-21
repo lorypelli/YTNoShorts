@@ -170,8 +170,8 @@ export default function Options() {
                         document.getElementsByTagName('button')[4].style.backgroundColor = 'blueviolet';
                     }, 500);
                 }}>Check for updates</Button>
-                <h1 id='status'>...</h1>
             </div>
+            <h1 id='status'>...</h1>
         </MantineProvider>
     );
 }
