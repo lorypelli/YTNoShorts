@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Switch, TextInput, Button, MantineProvider, Select } from '@mantine/core';
 import { useStorage } from '@plasmohq/storage/hook';
 import './styles/Options.css';

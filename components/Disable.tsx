@@ -1,5 +1,5 @@
 /* eslint-disable prefer-const */
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@mantine/core';
 import { useStorage } from '@plasmohq/storage/hook';
 export default function Disable() {
@@ -12,7 +12,7 @@ export default function Disable() {
         <>
             <h1>Extension is currently {extDisabled ? 'disabled' : 'enabled'}</h1>
             <Button id='disable' onClick={async () => {
-                setExtension(!extDisabled);
+                setExtension(extDisabled);
                 setExtDisabled(!extDisabled);
             }}>{!extDisabled ? 'DISABLE' : 'ENABLE'}</Button>
         </>

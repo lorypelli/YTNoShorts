@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-no-target-blank */
-import React from 'react';
 import { IconBrandGithub } from '@tabler/icons-react';
 export default function Footer() {
     return (
